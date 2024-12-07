@@ -18,8 +18,8 @@ const App = () => {
             try {
                 const { data } = await fetchVendors();
                 setVendors(data);
-                console.log(data);
-                if (data.length > 0) setSelectedVendor(data[0]._id); // Default to the first vendor's ObjectId
+                console.log('Vendors:', data);
+                if (data.length > 0) setSelectedVendor(data[0]); // Default to the first vendor object
             } catch (err) {
                 console.error('Error loading vendors:', err);
             }
@@ -33,13 +33,16 @@ const App = () => {
             <Router>
                 <Navbar
                     vendors={vendors}
-                    onVendorClick={(vendorId) => setSelectedVendor(vendorId)} // Update selected vendor
+                    onVendorClick={(vendorId) => {
+                        const vendor = vendors.find((v) => v._id === vendorId);
+                        setSelectedVendor(vendor); // Set the full vendor object
+                    }}
                 />
                 <Routes>
                     {selectedVendor && (
                         <Route
                             path="/"
-                            element={<VendorProducts vendorId={selectedVendor} />}
+                            element={<VendorProducts vendor={selectedVendor} />}
                         />
                     )}
                     <Route path="/cart" element={<Cart />} />
