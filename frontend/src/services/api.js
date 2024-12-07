@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'http://localhost:8080', // Adjust this based on your backend URL
+    baseURL: 'https://acxiom-assignment.onrender.com', // Adjust this based on your backend URL
     withCredentials: true, // Enable session cookies
 });
 

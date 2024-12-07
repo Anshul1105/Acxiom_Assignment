@@ -18,9 +18,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:5173', // Frontend URL
+    origin: '*', // Allow all origins
     credentials: true,
 }));
+
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
