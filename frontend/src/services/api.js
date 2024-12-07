@@ -14,6 +14,9 @@ export const loginUser = (data) => API.post('/users/login', data);
 export const fetchCart = () => API.get('/cart');
 export const addToCart = (productId) => API.post('/cart/add', { productId });
 
+export const removeFromCart = (productId) =>
+    API.post('/cart/remove', { productId }); // Remove endpoint
+
 // API calls for Products
 export const fetchProductsByVendor = (vendorId) => API.get(`/products/vendor/${vendorId}`);
 

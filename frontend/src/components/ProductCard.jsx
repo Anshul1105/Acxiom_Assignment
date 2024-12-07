@@ -10,7 +10,7 @@ const ProductCard = ({ product, onAdd, onRemove }) => {
                 className="product-image"
             />
             <h3>{product.name || 'Unnamed Product'}</h3>
-            <p>Price: ${product.price?.toFixed(2) || 'N/A'}</p> {/* Display price with two decimals */}
+            <p>Price: ${product.price ? product.price.toFixed(2) : 'N/A'}</p> {/* Display price with two decimals */}
             <div className="product-actions">
                 <button onClick={() => onAdd(product._id)}>Add</button>
                 <button onClick={() => onRemove(product._id)}>Remove</button>

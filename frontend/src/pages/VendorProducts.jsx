@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchProductsByVendor, addToCart, fetchCart } from '../services/api';
+import { fetchProductsByVendor, addToCart, fetchCart, removeFromCart } from '../services/api';
 import ProductCard from '../components/ProductCard';
 
 const VendorProducts = ({ vendor }) => {
@@ -45,6 +45,17 @@ const VendorProducts = ({ vendor }) => {
         }
     };
 
+    // Handle removing a product from the cart
+    const handleRemove = async (productId) => {
+        try {
+            const response = await removeFromCart(productId);
+            setCart(response.data.cart.products);
+            console.log('Product removed:', productId);
+        } catch (err) {
+            console.error('Error removing product from cart:', err);
+        }
+    };
+
     return (
         <div>
             <h2>Products from Vendor: {vendor.name}</h2>
@@ -55,6 +66,7 @@ const VendorProducts = ({ vendor }) => {
                             key={product._id}
                             product={product}
                             onAdd={handleAdd}
+                            onRemove={handleRemove} // Pass handleRemove to ProductCard
                         />
                     ))
                 ) : (

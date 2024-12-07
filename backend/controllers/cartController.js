@@ -9,7 +9,7 @@ exports.getCart = async (req, res) => {
         const cart = await Cart.findOne({ user: req.user.id }).populate('products.product');
         res.status(200).json(cart || { products: [] });
     } catch (err) {
-        console.log("Hello error")
+        console.log("Error fetching cart:", err);
         res.status(500).json({ error: err.message });
     }
 };
@@ -34,6 +34,37 @@ exports.addToCart = async (req, res) => {
         }
         await cart.save();
         res.status(200).json({ message: 'Product added to cart', cart });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// Remove from Cart
+exports.removeFromCart = async (req, res) => {
+    try {
+        const { productId } = req.body;
+        let cart = await Cart.findOne({ user: req.user.id });
+
+        if (!cart) return res.status(404).json({ message: 'Cart not found' });
+
+        const productIndex = cart.products.findIndex(p => p.product.toString() === productId);
+        
+        if (productIndex === -1) {
+            return res.status(404).json({ message: 'Product not found in cart' });
+        }
+
+        const product = cart.products[productIndex];
+        
+        if (product.quantity > 1) {
+            // Decrease the quantity by 1
+            product.quantity -= 1;
+        } else {
+            // Remove the product from cart if quantity is 1
+            cart.products.splice(productIndex, 1);
+        }
+
+        await cart.save();
+        res.status(200).json({ message: 'Product removed from cart', cart });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
