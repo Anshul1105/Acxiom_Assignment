@@ -18,6 +18,7 @@ const App = () => {
             try {
                 const { data } = await fetchVendors();
                 setVendors(data);
+                console.log(data);
                 if (data.length > 0) setSelectedVendor(data[0]._id); // Default to the first vendor's ObjectId
             } catch (err) {
                 console.error('Error loading vendors:', err);

@@ -7,10 +7,10 @@ exports.getAllVendors = async (req, res) => {
         const products = await Product.find().populate('vendor', 'name'); // Populates vendor name
 
         // Extract unique vendors
-        const vendorIds = [...new Set(products.map((product) => product.vendor._id))]; // Get unique vendor names
+        const vendors = [...new Set(products.map((product) => product.vendor))]; // Get unique vendor names
         // console.log(products);
 
-        res.status(200).json(vendorIds); // Return unique vendor names
+        res.status(200).json(vendors); // Return unique vendor names
     } catch (err) {
         console.error("Error fetching vendors:", err); // Log the error
         res.status(500).json({ message: 'Error fetching vendors', error: err.message });

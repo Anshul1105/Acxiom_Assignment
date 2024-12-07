@@ -19,8 +19,8 @@ const Navbar = ({ vendors, onVendorClick }) => {
             <select onChange={(e) => onVendorClick(e.target.value)}>
                 <option value="">Select a Vendor</option>
                 {vendors.map((vendor) => (
-                    <option key={vendor._id} value={vendor}>
-                        {vendor}
+                    <option key={vendor._id} value={vendor._id}>
+                        {vendor.name}
                     </option>
                 ))}
             </select>
