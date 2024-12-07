@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // Import the custom hook
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = ({ vendors, onVendorClick }) => {
-    const { isLoggedIn, logout } = useAuth(); // Use the AuthContext
+    const { isLoggedIn, logout } = useAuth();
 
     const handleLogout = () => {
-        logout(); // Call the logout function from context
+        logout();
     };
 
     return (
@@ -14,17 +14,20 @@ const Navbar = ({ vendors, onVendorClick }) => {
             <Link to="/">Home</Link>
             <Link to="/cart">Cart</Link>
             <Link to="/profile">Profile</Link>
-            
-            {/* Conditional rendering of Vendor buttons */}
-            {vendors.map((vendor) => (
-                <button key={vendor} onClick={() => onVendorClick(vendor)}>
-                    Vendor {vendor}
-                </button>
-            ))}
-            
-            {/* Conditional rendering of login, signup or logout buttons */}
+
+            {/* Dropdown for vendors */}
+            <select onChange={(e) => onVendorClick(e.target.value)}>
+                <option value="">Select a Vendor</option>
+                {vendors.map((vendor) => (
+                    <option key={vendor._id} value={vendor}>
+                        {vendor}
+                    </option>
+                ))}
+            </select>
+
+            {/* Conditional rendering of login, signup, or logout buttons */}
             {isLoggedIn ? (
-                <button onClick={handleLogout}>Logout</button> // Show logout if logged in
+                <button onClick={handleLogout}>Logout</button>
             ) : (
                 <>
                     <Link to="/login">

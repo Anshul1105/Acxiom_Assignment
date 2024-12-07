@@ -6,8 +6,8 @@ import VendorProducts from './pages/VendorProducts';
 import Cart from './components/Cart';
 import Profile from './components/Profile';
 import Login from './pages/Login';
-import { fetchVendors } from './services/api';
 import Signup from './pages/Signup';
+import { fetchVendors } from './services/api';
 
 const App = () => {
     const [vendors, setVendors] = useState([]);
@@ -17,10 +17,8 @@ const App = () => {
         const loadVendors = async () => {
             try {
                 const { data } = await fetchVendors();
-                console.log(data);
                 setVendors(data);
-                setSelectedVendor(data[0]); // Default to the first vendor's ObjectId
-                console.log(data)
+                if (data.length > 0) setSelectedVendor(data[0]._id); // Default to the first vendor's ObjectId
             } catch (err) {
                 console.error('Error loading vendors:', err);
             }
@@ -34,11 +32,14 @@ const App = () => {
             <Router>
                 <Navbar
                     vendors={vendors}
-                    onVendorClick={(vendor) => setSelectedVendor(vendor._id)} // Set only the ObjectId
+                    onVendorClick={(vendorId) => setSelectedVendor(vendorId)} // Update selected vendor
                 />
                 <Routes>
                     {selectedVendor && (
-                        <Route path="/" element={<VendorProducts vendorId={selectedVendor} />} />
+                        <Route
+                            path="/"
+                            element={<VendorProducts vendorId={selectedVendor} />}
+                        />
                     )}
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/profile" element={<Profile />} />
