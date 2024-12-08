@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'https://acxiom-assignment.onrender.com', // Adjust this based on your backend URL
+    baseURL: 'http://localhost:8080', // Adjust this based on your backend URL
     withCredentials: true, // Enable session cookies
 });
+// baseURL: 'https://acxiom-assignment.onrender.com',
 
 // API calls for User Authentication
 export const registerUser = (data) => API.post('/users/register', data);

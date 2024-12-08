@@ -57,50 +57,47 @@ const VendorProducts = ({ vendor }) => {
     };
 
     return (
-        <div>
-            <h2>Products from Vendor: {vendor.name}</h2>
-            <div className="product-list">
-                {products.length > 0 ? (
-                    products.map((product) => (
-                        <ProductCard
-                            key={product._id}
-                            product={product}
-                            onAdd={handleAdd}
-                            onRemove={handleRemove} // Pass handleRemove to ProductCard
-                        />
-                    ))
-                ) : (
-                    <p>No products available for this vendor.</p>
-                )}
-            </div>
+        <div className="max-w-6xl mx-auto p-6">
+    <h2 className="text-2xl font-bold mb-4">Products from Vendor: {vendor.name}</h2>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {products.length > 0 ? (
+            products.map((product) => (
+                <ProductCard 
+                    key={product._id} 
+                    product={product} 
+                    onAdd={handleAdd} 
+                    onRemove={handleRemove} 
+                />
+            ))
+        ) : (
+            <p className="text-gray-500 col-span-full">No products available for this vendor.</p>
+        )}
+    </div>
+    <h3 className="text-xl font-semibold mt-6">Your Cart</h3>
+    <ul className="space-y-2">
+        {cart.length > 0 ? (
+            cart.map((item) => (
+                <li key={item.product && item.product._id} className="border p-2 rounded-md">
+                    {item.product && item.product.name} - {item.quantity} x $
+                    {item.product && item.product.price}
+                </li>
+            ))
+        ) : (
+            <p className="text-gray-500">Your cart is empty.</p>
+        )}
+    </ul>
+    {cart.length > 0 && (
+        <p className="font-bold mt-4">
+            Total Price: $
+            {cart.reduce(
+                (total, item) =>
+                    total + (item.product && item.product.price) * item.quantity,
+                0
+            )}
+        </p>
+    )}
+</div>
 
-            <div>
-                <h3>Your Cart</h3>
-                <ul>
-                    {cart.length > 0 ? (
-                        cart.map((item) => (
-                            <li key={item.product && item.product._id}>
-                                {item.product && item.product.name} - {item.quantity} x $
-                                {item.product && item.product.price}
-                            </li>
-                        ))
-                    ) : (
-                        <p>Your cart is empty.</p>
-                    )}
-                </ul>
-                {cart.length > 0 && (
-                    <p>
-                        Total Price: $
-                        {cart.reduce(
-                            (total, item) =>
-                                total +
-                                (item.product && item.product.price) * item.quantity,
-                            0
-                        )}
-                    </p>
-                )}
-            </div>
-        </div>
     );
 };
 

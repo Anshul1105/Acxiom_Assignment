@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'https://tiny-figolla-b1277a.netlify.app',  // Specify the frontend URL
+    origin: 'http://localhost:5173',  // Specify the frontend URL
     credentials: true, // Allow credentials to be sent
 }));
 

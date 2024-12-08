@@ -2,12 +2,13 @@
   "name": "proj-assign",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:css": "npx tailwindcss -i ./src/tailwind.css -o ./src/index.css --watch"
   },
   "dependencies": {
     "axios": "^1.7.9",
