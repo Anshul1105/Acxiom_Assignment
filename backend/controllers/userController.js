@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 exports.registerUser = async (req, res) => {
     try {
         const { username, email, password } = req.body;
-        
+
         // Check if user already exists
         const existingUser = await User.findOne({ username });
         if (existingUser) {
@@ -24,13 +24,17 @@ exports.registerUser = async (req, res) => {
         });
 
         // Save user to the database
-        await newUser.save();
+        const savedUser = await newUser.save();
+
+        // Serialize user into session
+        req.session.user = { id: savedUser._id, username: savedUser.username };
 
         res.status(201).json({ message: 'User registered successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
+
 
 // Login User
 exports.loginUser = async (req, res) => {
@@ -62,10 +66,10 @@ exports.logoutUser = (req, res) => {
 exports.getUserOrders = async (req, res) => {
     try {
         const userId = req.session.user.id;  // Getting the user ID from the session
-        
+
         // Find user by ID and populate the orders field (if orders are referenced as another collection)
         const user = await User.findById(userId).populate('orders'); // Assuming the `orders` field is populated from the Order model
-        
+
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
