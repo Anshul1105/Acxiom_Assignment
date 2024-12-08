@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'https://dancing-vacherin-4d038a.netlify.app/',  // Specify the frontend URL
+    origin: 'https://dancing-vacherin-4d038a.netlify.app',  // Specify the frontend URL
     credentials: true, // Allow credentials to be sent
 }));
 
@@ -29,7 +29,7 @@ mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => console.log('MongoDB connected'))
-  .catch(err => console.error(err));
+    .catch(err => console.error(err));
 
 // Session Configuration
 app.use(session({
