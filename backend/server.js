@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:5173',  // Specify the frontend URL
+    origin: 'https://dancing-vacherin-4d038a.netlify.app/',  // Specify the frontend URL
     credentials: true, // Allow credentials to be sent
 }));
 
