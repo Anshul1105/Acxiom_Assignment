@@ -10,7 +10,7 @@ const userRoutes = require('./routes/userRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const productRoutes = require('./routes/productRoutes');
 const vendorRoutes = require('./routes/vendorRoutes');
-const orderRoutes = require('./routes//orderRoutes')
+const orderRoutes = require('./routes/orderRoutes');
 dotenv.config();
 const app = express();
 
@@ -21,8 +21,6 @@ app.use(cors({
     origin: 'https://dancing-vacherin-4d038a.netlify.app',  // Specify the frontend URL
     credentials: true, // Allow credentials to be sent
 }));
-
-
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
@@ -38,7 +36,7 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
     cookie: {
-        secure: false, // Set to true if using HTTPS
+        secure: process.env.NODE_ENV === 'production', // True if using HTTPS in production
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
