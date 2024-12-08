@@ -1,5 +1,6 @@
 // middleware/auth.js
 module.exports = (req, res, next) => {
+    console.log(req.session);
     if (!req.session.user) {
         console.log("Unauth");
         return res.status(401).json({ message: 'Unauthorized' });
